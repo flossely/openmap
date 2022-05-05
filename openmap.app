@@ -1,0 +1,1 @@
+OpenMap|[1]|sys.space.png|[1]|window.location.href='openmap.php';
