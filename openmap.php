@@ -1,24 +1,11 @@
 <?php
-$mapname = ($_REQUEST['name']) ? $_REQUEST['name'] : 'sample.map';
-$mapfile = file_get_contents($mapname);
-$mapdel = explode('|[1]|', $mapfile);
-$map = [];
-foreach ($mapdel as $mapord => $maprow) {
-    $mapdeli = explode('|[2]|', $maprow);
-    $mapi = [];
-    foreach ($mapdeli as $mapabs => $mapelem) {
-    	$mapexp = explode('|[3]|', $mapelem);
-    	$maphead = $mapexp[0];
-    	$mapbody = $mapexp[1];
-    	$mapheadexp = explode('|[4]|', $maphead);
-    	$mapheadx = $mapheadexp[0];
-    	$mapheady = $mapheadexp[1];
-    	$mapbodyexp = explode('|[4]|', $mapbody);
-    	$mapbodyalt = $mapbodyexp[0];
-    	$mapbodytitle = $mapbodyexp[1];
-    	$mapi[] = $mapbodyalt;
+$dir = '.';
+$mode = ($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
+$list = str_replace($dir.'/','',(glob($dir.'/*', GLOB_ONLYDIR)));
+foreach ($list as $key=>$value) {
+    if (!file_exists($value.'/coord')) {
+        unset($list[array_search($value, $list)]);
     }
-    $map[] = $mapi;
 }
 ?>
 <html>
@@ -28,43 +15,32 @@ foreach ($mapdel as $mapord => $maprow) {
 <title>OpenMap</title>
 <link rel="shortcut icon" href="sys.space.png?rev=<?=time();?>" type="image/x-icon">
 <link href="system.css?rev=<?=time();?>" rel="stylesheet">
-<!-- Plotly.js -->
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-<!-- Plotly chart will be drawn inside this DIV -->
-<div id="myDiv" style="width:100%; height:100%;"></div>
-<script>
-  /* JAVASCRIPT CODE GOES HERE */
-  var jsonObj = JSON.parse('<?=json_encode($map);?>');
-  var arr = [];
-  
-  for (var i=0;i<jsonObj.length;i++){
-    for (tile in jsonObj[i]){
-      arr.push(jsonObj[i][tile]);
+<div class='top'>
+<p align='center'>
+<input type='button' value='HOME' onclick="window.location.href='openmap.php';">
+<input type='button' value='LOG' onclick="window.location.href='openmap.php?mode=log';">
+<input type='button' value='TOP' onclick="window.location.href='openmap.php?mode=top';">
+</p>
+</div>
+<div class='panel'>
+<?php if ($mode = '') { ?>
+
+<?php } elseif ($mode = 'log') { ?>
+
+<?php } elseif ($mode = 'top') {
+    foreach ($list as $key=>$value) {
+        $coord = file_get_contents($value.'/coord');
+        $coordDiv = explode(';', $coord);
+        $coordX = $coordDiv[0];
+        $coordY = $coordDiv[1];
+        $coordZ = $coordDiv[2];
+        echo $value.' ('.$coordX.';'.$coordY.';'.$coordZ.')<br>';
     }
-  }
-  
-  var data =
-  [
-    {
-      z: [[0,50,-20],[0,50,-20],[0,50,-20],[0,50,-20]],
-      type: 'surface',
-    }
-  ];
-var layout = {
-  title: '',
-  autosize: true,
-  width: 800,
-  height: 600,
-  margin: {
-    l: 65,
-    r: 50,
-    b: 65,
-    t: 90
-  }
-};
-Plotly.newPlot('myDiv', data, layout);
-  </script>
+} else { ?>
+
+<?php } ?>
+</div>
 </body>
 </html>
