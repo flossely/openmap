@@ -32,6 +32,7 @@ if ($mode == '') {
 <link rel="shortcut icon" href="sys.space.png?rev=<?=time();?>" type="image/x-icon">
 <link href="system.css?rev=<?=time();?>" rel="stylesheet">
 <?php include 'base.incl.php'; ?>
+<?php include 'entity.incl.php'; ?>
 </head>
 <body>
 <div class='top'>
@@ -68,9 +69,21 @@ if ($mode == '') {
     foreach ($list as $key=>$value) {
         $coord = file_get_contents($value.'/coord');
         $coordDiv = explode(';', $coord);
-        $coordX = $coordDiv[0] ?? 0;
-        $coordY = $coordDiv[1] ?? 0;
-        $coordZ = $coordDiv[2] ?? 0;
+        if (is_numeric($coordDiv[0])) {
+            $coordX = $coordDiv[0];
+        } else {
+            $coordX = 0;
+        }
+        if (is_numeric($coordDiv[1])) {
+            $coordY = $coordDiv[1];
+        } else {
+            $coordY = 0;
+        }
+        if (is_numeric($coordDiv[2])) {
+            $coordZ = $coordDiv[2];
+        } else {
+            $coordZ = 0;
+        }
         echo $value.' ('.$coordX.';'.$coordY.';'.$coordZ.')<br>';
     }
 } else { ?>
