@@ -68,9 +68,9 @@ if ($mode == '') {
     foreach ($list as $key=>$value) {
         $coord = file_get_contents($value.'/coord');
         $coordDiv = explode(';', $coord);
-        $coordX = $coordDiv[0];
-        $coordY = $coordDiv[1];
-        $coordZ = $coordDiv[2];
+        $coordX = $coordDiv[0] ? 0;
+        $coordY = $coordDiv[1] ? 0;
+        $coordZ = $coordDiv[2] ? 0;
         echo $value.' ('.$coordX.';'.$coordY.';'.$coordZ.')<br>';
     }
 } else { ?>
