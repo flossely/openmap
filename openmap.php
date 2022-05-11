@@ -40,6 +40,9 @@ if ($mode == '') {
 <input type='button' value='Home' onclick="window.location.href='openmap.php';">
 <input type='button' value='Log' onclick="window.location.href='openmap.php?mode=log';">
 <input type='button' value='Top' onclick="window.location.href='openmap.php?mode=top';">
+<input type='button' value='L' onclick="batch('mode',-1);">
+<input type='button' value='C' onclick="batch('mode',0);">
+<input type='button' value='R' onclick="batch('mode',1);">
 <input type='button' value='Reset' onclick="manage('reset','','');">
 <input type='button' value='U' onclick="get('i','','from','space','','flossely',true); get('i','','from','cartesian','','flossely',true); get('i','','from','openmap','','flossely',false);">
 <input type='button' value='X' onclick="window.location.href='index.php';">
