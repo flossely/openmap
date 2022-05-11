@@ -1,6 +1,6 @@
 <?php
 if ($sub == $obj) {
-    echo $sub.' ('.$subRating.')';
+    echo $sub.' ('.$subRating.') is thinking...<br>';
 } elseif ($sub != $obj) {
     if ($subRating >= 0) {
         if ($objRating >= 0) {
@@ -18,13 +18,13 @@ if ($sub == $obj) {
                 echo $sub.' ('.$subRating.') + '.$obj.' ('.$objRating.')<br>';
             }
         } elseif ($objRating < 0) {
-            echo $sub.' to '.$obj.': Good riddance<br>';
+            echo $sub.' to '.$obj.': good riddance<br>';
         }
     } elseif ($subRating < 0) {
         if ($objRating >= 0) {
-            echo $obj.' to '.$sub.': Good riddance<br>';
+            echo $obj.' to '.$sub.': good riddance<br>';
         } elseif ($objRating < 0) {
-            echo $sub.' ('.$subRating.') '.$obj.' ('.$objRating.')<br>';
+            echo $sub.' ('.$subRating.') is dead<br>';
         }
     }
 }
