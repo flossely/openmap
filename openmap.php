@@ -36,9 +36,10 @@ if ($mode == '') {
 <body>
 <div class='top'>
 <p align='center'>
-<input type='button' value='HOME' onclick="window.location.href='openmap.php';">
-<input type='button' value='LOG' onclick="window.location.href='openmap.php?mode=log';">
-<input type='button' value='TOP' onclick="window.location.href='openmap.php?mode=top';">
+<input type='button' value='Home' onclick="window.location.href='openmap.php';">
+<input type='button' value='Log' onclick="window.location.href='openmap.php?mode=log';">
+<input type='button' value='Top' onclick="window.location.href='openmap.php?mode=top';">
+<input type='button' value='Reset' onclick="manage('reset','','');">
 <input type='button' value='U' onclick="get('i','','from','space','','flossely',true); get('i','','from','cartesian','','flossely',true); get('i','','from','openmap','','flossely',false);">
 <input type='button' value='X' onclick="window.location.href='index.php';">
 </p>
