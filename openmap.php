@@ -1,11 +1,27 @@
 <?php
 $dir = '.';
 $mode = ($_REQUEST['mode']) ? $_REQUEST['mode'] : '';
-$list = str_replace($dir.'/','',(glob($dir.'/*', GLOB_ONLYDIR)));
-foreach ($list as $key=>$value) {
-    if (!file_exists($value.'/coord')) {
-        unset($list[array_search($value, $list)]);
+if ($mode == '') {
+
+} elseif ($mode == 'log') {
+    $turn = ($_REQUEST['turn']) ? $_REQUEST['turn'] : 10;
+    $list = str_replace($dir.'/','',(glob($dir.'/*', GLOB_ONLYDIR)));
+    foreach ($list as $key=>$value) {
+        if (!file_exists($value.'/coord') && !file_exists($value.'/rating') && !file_exists($value.'/mode')) {
+            unset($list[array_search($value, $list)]);
+        }
     }
+    $count = count($list);
+    $last = $count - 1;
+} elseif ($mode == 'top') {
+    $list = str_replace($dir.'/','',(glob($dir.'/*', GLOB_ONLYDIR)));
+    foreach ($list as $key=>$value) {
+        if (!file_exists($value.'/coord') && !file_exists($value.'/rating') && !file_exists($value.'/mode')) {
+            unset($list[array_search($value, $list)]);
+        }
+    }
+} else {
+
 }
 ?>
 <html>
@@ -30,9 +46,56 @@ foreach ($list as $key=>$value) {
 <div class='panel'>
 <?php if ($mode == '') { ?>
 
-<?php } elseif ($mode == 'log') { ?>
-
-<?php } elseif ($mode == 'top') {
+<?php } elseif ($mode == 'log') {
+    for ($i=0; $i<=$turn; $i++) {
+        $sub = $list[rand(0,$last)];
+        $subRating = file_get_contents($sub.'/rating');
+        $subMode = file_get_contents($sub.'/mode');
+        $obj = $list[rand(0,$last)];
+        $objRating = file_get_contents($obj.'/rating');
+        $objMode = file_get_contents($obj.'/mode');
+        if ($subMode > $objMode) {
+            $subForce = ($subMode - $objMode) + 1;
+        } elseif ($subMode < $objMode) {
+            $subForce = ($objMode - $subMode) - 1;
+        } elseif ($subMode == $objMode) {
+            $subForce = 1;
+        }
+        if ($subRating >= 0) {
+            if ($objRating >= 0) {
+                if (($subMode == 0 && $objMode == 0) || ($subMode > 0 && $objMode < 0) || ($subMode < 0 && $objMode > 0)) {
+                    $objRating = $objRating - $subForce;
+                    $subRating = $subRating + $subForce;
+                    echo $sub.' ('.$subRating.') - '.$obj.' ('.$objRating.')';
+                } elseif (($subMode > 0 && $objMode > 0) || ($subMode < 0 && $objMode < 0)) {
+                    $objRating = $objRating + $subForce;
+                    $subRating = $subRating - $subForce;
+                    echo $sub.' ('.$subRating.') + '.$obj.' ('.$objRating.')';
+                } elseif (($subMode > 0 && $objMode == 0) || ($subMode < 0 && $objMode == 0) || ($subMode == 0 && $objMode > 0) || ($subMode == 0 && $objMode < 0)) {
+                    $objRating = $objRating + $subForce;
+                    $subRating = $subRating - $subForce;
+                    echo $sub.' ('.$subRating.') + '.$obj.' ('.$objRating.')';
+                }
+            } elseif ($objRating < 0) {
+                echo $sub.' to '.$obj.': Good riddance';
+            }
+        } elseif ($subRating < 0) {
+            if ($objRating >= 0) {
+                echo $obj.' to '.$sub.': Good riddance';
+            } elseif ($objRating < 0) {
+                echo $sub.' ('.$subRating.') '.$obj.' ('.$objRating.')';
+            }
+        }
+        file_put_contents($sub.'/rating', $subRating);
+        chmod($sub.'/rating', 0777);
+        file_put_contents($sub.'/mode', $subMode);
+        chmod($sub.'/mode', 0777);
+        file_put_contents($obj.'/rating', $objRating);
+        chmod($obj.'/rating', 0777);
+        file_put_contents($obj.'/mode', $objMode);
+        chmod($obj.'/mode', 0777);
+    }
+} elseif ($mode == 'top') {
     foreach ($list as $key=>$value) {
         $coord = file_get_contents($value.'/coord');
         $coordDiv = explode(';', $coord);
