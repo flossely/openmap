@@ -25,11 +25,11 @@ foreach ($list as $key=>$value) {
 </p>
 </div>
 <div class='panel'>
-<?php if ($mode = '') { ?>
+<?php if ($mode == '') { ?>
 
-<?php } elseif ($mode = 'log') { ?>
+<?php } elseif ($mode == 'log') { ?>
 
-<?php } elseif ($mode = 'top') {
+<?php } elseif ($mode == 'top') {
     foreach ($list as $key=>$value) {
         $coord = file_get_contents($value.'/coord');
         $coordDiv = explode(';', $coord);
