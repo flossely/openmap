@@ -61,31 +61,7 @@ if ($mode == '') {
         } elseif ($subMode == $objMode) {
             $subForce = 1;
         }
-        if ($subRating >= 0) {
-            if ($objRating >= 0) {
-                if (($subMode == 0 && $objMode == 0) || ($subMode > 0 && $objMode < 0) || ($subMode < 0 && $objMode > 0)) {
-                    $objRating = $objRating - $subForce;
-                    $subRating = $subRating + $subForce;
-                    echo $sub.' ('.$subRating.') - '.$obj.' ('.$objRating.')<br>';
-                } elseif (($subMode > 0 && $objMode > 0) || ($subMode < 0 && $objMode < 0)) {
-                    $objRating = $objRating + $subForce;
-                    $subRating = $subRating - $subForce;
-                    echo $sub.' ('.$subRating.') + '.$obj.' ('.$objRating.')<br>';
-                } elseif (($subMode > 0 && $objMode == 0) || ($subMode < 0 && $objMode == 0) || ($subMode == 0 && $objMode > 0) || ($subMode == 0 && $objMode < 0)) {
-                    $objRating = $objRating + $subForce;
-                    $subRating = $subRating - $subForce;
-                    echo $sub.' ('.$subRating.') + '.$obj.' ('.$objRating.')<br>';
-                }
-            } elseif ($objRating < 0) {
-                echo $sub.' to '.$obj.': Good riddance<br>';
-            }
-        } elseif ($subRating < 0) {
-            if ($objRating >= 0) {
-                echo $obj.' to '.$sub.': Good riddance<br>';
-            } elseif ($objRating < 0) {
-                echo $sub.' ('.$subRating.') '.$obj.' ('.$objRating.')<br>';
-            }
-        }
+        include 'machine.php';
         file_put_contents($sub.'/rating', $subRating);
         chmod($sub.'/rating', 0777);
         file_put_contents($sub.'/mode', $subMode);
