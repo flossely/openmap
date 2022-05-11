@@ -26,6 +26,6 @@ if ($sub == $obj) {
     if (($distX <= $subRating) && ($distY <= $subRating) && ($distZ <= $subRating)) {
         include 'discover.php';
     } else {
-        echo $obj.' not reachable';
+        echo $sub.': '.$obj.' not reachable<br>';
     }
 }
