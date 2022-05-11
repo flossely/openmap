@@ -50,9 +50,13 @@ if ($mode == '') {
 
 <?php } elseif ($mode == 'log') {
     for ($i=0; $i<=$turn; $i++) {
-        $sub = $list[rand(0,$last)];
+        $subRand = rand(0,$last);
+        $subID = $subRand;
+        $sub = $list[$subRand];
         include 'autosubopen.php';
-        $obj = $list[rand(0,$last)];
+        $objRand = rand(0,$last);
+        $objID = $objRand;
+        $obj = $list[$objRand];
         include 'autoobjopen.php';
         if ($subMode > $objMode) {
             $subForce = ($subMode - $objMode) + 1;
