@@ -49,11 +49,9 @@ if ($mode == '') {
 <?php } elseif ($mode == 'log') {
     for ($i=0; $i<=$turn; $i++) {
         $sub = $list[rand(0,$last)];
-        $subRating = file_get_contents($sub.'/rating');
-        $subMode = file_get_contents($sub.'/mode');
+        include 'autosubopen.php';
         $obj = $list[rand(0,$last)];
-        $objRating = file_get_contents($obj.'/rating');
-        $objMode = file_get_contents($obj.'/mode');
+        include 'autoobjopen.php';
         if ($subMode > $objMode) {
             $subForce = ($subMode - $objMode) + 1;
         } elseif ($subMode < $objMode) {
@@ -62,14 +60,8 @@ if ($mode == '') {
             $subForce = 1;
         }
         include 'machine.php';
-        file_put_contents($sub.'/rating', $subRating);
-        chmod($sub.'/rating', 0777);
-        file_put_contents($sub.'/mode', $subMode);
-        chmod($sub.'/mode', 0777);
-        file_put_contents($obj.'/rating', $objRating);
-        chmod($obj.'/rating', 0777);
-        file_put_contents($obj.'/mode', $objMode);
-        chmod($obj.'/mode', 0777);
+        include 'autosubsave.php';
+        include 'autoobjsave.php';
     }
 } elseif ($mode == 'top') {
     foreach ($list as $key=>$value) {
