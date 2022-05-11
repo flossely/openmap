@@ -71,6 +71,8 @@ if ($mode == '') {
     }
 } elseif ($mode == 'top') {
     foreach ($list as $key=>$value) {
+        $rating = file_get_contents($value.'/rating');
+        $mode = file_get_contents($value.'/mode');
         $coord = file_get_contents($value.'/coord');
         $coordDiv = explode(';', $coord);
         if (is_numeric($coordDiv[0])) {
@@ -88,7 +90,7 @@ if ($mode == '') {
         } else {
             $coordZ = 0;
         }
-        echo $value.' ('.$coordX.';'.$coordY.';'.$coordZ.')<br>';
+        echo $value.' ('.$rating.') ('.$coordX.';'.$coordY.';'.$coordZ.')<br>';
     }
 } else { ?>
 
