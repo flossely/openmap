@@ -66,24 +66,24 @@ if ($mode == '') {
                 if (($subMode == 0 && $objMode == 0) || ($subMode > 0 && $objMode < 0) || ($subMode < 0 && $objMode > 0)) {
                     $objRating = $objRating - $subForce;
                     $subRating = $subRating + $subForce;
-                    echo $sub.' ('.$subRating.') - '.$obj.' ('.$objRating.')';
+                    echo $sub.' ('.$subRating.') - '.$obj.' ('.$objRating.')<br>';
                 } elseif (($subMode > 0 && $objMode > 0) || ($subMode < 0 && $objMode < 0)) {
                     $objRating = $objRating + $subForce;
                     $subRating = $subRating - $subForce;
-                    echo $sub.' ('.$subRating.') + '.$obj.' ('.$objRating.')';
+                    echo $sub.' ('.$subRating.') + '.$obj.' ('.$objRating.')<br>';
                 } elseif (($subMode > 0 && $objMode == 0) || ($subMode < 0 && $objMode == 0) || ($subMode == 0 && $objMode > 0) || ($subMode == 0 && $objMode < 0)) {
                     $objRating = $objRating + $subForce;
                     $subRating = $subRating - $subForce;
-                    echo $sub.' ('.$subRating.') + '.$obj.' ('.$objRating.')';
+                    echo $sub.' ('.$subRating.') + '.$obj.' ('.$objRating.')<br>';
                 }
             } elseif ($objRating < 0) {
-                echo $sub.' to '.$obj.': Good riddance';
+                echo $sub.' to '.$obj.': Good riddance<br>';
             }
         } elseif ($subRating < 0) {
             if ($objRating >= 0) {
-                echo $obj.' to '.$sub.': Good riddance';
+                echo $obj.' to '.$sub.': Good riddance<br>';
             } elseif ($objRating < 0) {
-                echo $sub.' ('.$subRating.') '.$obj.' ('.$objRating.')';
+                echo $sub.' ('.$subRating.') '.$obj.' ('.$objRating.')<br>';
             }
         }
         file_put_contents($sub.'/rating', $subRating);
