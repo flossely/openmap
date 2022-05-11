@@ -14,27 +14,7 @@ if ($objRating >= 0) {
         echo $sub.' ('.$subRating.') healed ('.$subForce.') '.$obj.' ('.$objRating.')<br>';
     }
 } elseif ($objRating < 0) {
-    $say =
-    [
-        '-1' =>
-        [
-            'You are cancer',
-            'Be damned',
-            'How good you died',
-        ],
-        '0' =>
-        [
-            'Burn in hell',
-            'It serves you right',
-            'Much better off without you',
-        ],
-        '1' =>
-        [
-            'Good riddance',
-            'Hopefully you get what you deserve',
-            'You are human scum',
-        ],
-    ];
+    include 'address.php';
     $sayRand = rand(0,2);
-    echo $sub.' to '.$obj.': '.$say[$subMode][$sayRand].'<br>';
+    echo $sub.' to '.$obj.': '.$sayDead[$subMode][$objMode][$sayRand].'<br>';
 }
