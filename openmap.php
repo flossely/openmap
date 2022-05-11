@@ -15,6 +15,7 @@ foreach ($list as $key=>$value) {
 <title>OpenMap</title>
 <link rel="shortcut icon" href="sys.space.png?rev=<?=time();?>" type="image/x-icon">
 <link href="system.css?rev=<?=time();?>" rel="stylesheet">
+<?php include 'base.incl.php'; ?>
 </head>
 <body>
 <div class='top'>
